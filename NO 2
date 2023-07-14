@@ -1,0 +1,30 @@
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class uas {
+    public static void main(String[] args) {
+        String json = "{\"menu\" : {\"id\": \"file\",\"value\": \"File\",\"popup\": {\"menuitem\": [{\"value\": \"New\", \"onclick\": \"CreateNewDoc()\"},{\"value\": \"Open\", \"onclick\": \"OpenDoc()\"},{\"value\": \"Close\", \"onclick\": \"CloseDoc()\"}]}}}";
+
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject menuObject = jsonObject.getJSONObject("menu");
+            JSONObject popupObject = menuObject.getJSONObject("popup");
+            JSONArray menuitemArray = popupObject.getJSONArray("menuitem");
+
+            // Menampilkan nilai dari setiap entitas menuitem
+            for (int i = 0; i < menuitemArray.length(); i++) {
+                JSONObject itemObject = menuitemArray.getJSONObject(i);
+                String value = itemObject.getString("value");
+                String onclick = itemObject.getString("onclick");
+
+                System.out.println("Menu Item " + (i + 1) + ":");
+                System.out.println("Value: " + value);
+                System.out.println("Onclick: " + onclick);
+                System.out.println();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}
